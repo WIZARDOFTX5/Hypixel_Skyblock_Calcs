@@ -4,7 +4,7 @@ def main(silent=False):
     import requests
 
     def rng(run):
-        return 2*15*run*300/274000
+        return min(30*run*300/274000,30)  # returns the extra weight from rng meter (up to 30)
     def f7(meter,run,use_kismets,stop_at=999999999):
         inirun = run
         totalweight = 13710
@@ -23,8 +23,8 @@ def main(silent=False):
                 if run > 914:
                     handles += 1
                     break
-                handleweight = 15 + min(rng(run),30)
-                totalweight = 13710 + min(rng(run),30)
+                handleweight = 15 + rng(run)
+                totalweight = 13710 + rng(run)
 
             drop = random()
             handlechance = handleweight/totalweight
@@ -66,17 +66,18 @@ def main(silent=False):
     player = 0
     drops = []
     
-    if option == '1':
+    if option == '1': # have rng selected til drop handle
         while player < target_players:
             player += 1
             drops.append(f7(True,0,USE_KISMETS))
-    elif option == '2':
+    elif option == '2': # have rng unselected til drop handle, then select rng and drop handle again
         while player < target_players:
             player += 1
             first_run = f7(False,0,USE_KISMETS)
             second_run = f7(True,first_run[0],USE_KISMETS)
             drops.append([a + b for a, b in zip(first_run, second_run)])
-    elif option == '3':
+    elif option == '3': # have rng selected for first x runs, then unselect and go til handle drop(if havent dropped one), then select and go til drop handle
+        # so basically you either drop 1 handle in first x runs, or 2 handles 
         while player < target_players:
             player += 1
             first_run = f7(True,0,USE_KISMETS,stop_at=stop)
@@ -88,11 +89,11 @@ def main(silent=False):
                 third_run = f7(True,first_run[0]+second_run[0],USE_KISMETS)
             drops.append([a + b + c for a, b, c in zip(first_run, second_run, third_run)])
     else:
+        # have rng unselected for first x runs, then select and go til handle drop
         while player < target_players:
             player += 1
             first_run = f7(False,0,USE_KISMETS,stop_at=stop)
-            if first_run[4]:
-                second_run = f7(True,first_run[0],USE_KISMETS)
+            second_run = f7(True,first_run[0],USE_KISMETS)
             drops.append([a + b for a, b in zip(first_run, second_run)])
     run = numpy.median([drops[i][0] for i in range(len(drops))])
     scroll = numpy.median([drops[i][1] for i in range(len(drops))])
@@ -128,7 +129,7 @@ def main(silent=False):
         print(f"profit per run (Mean): {mean_profit}")
     return (median_profit,median_profit)
 
-menu = True
+menu = False
 if menu:
     SELL_TYPE = 'sellPrice' if input("Enter sell method for items\n1: Sell instantly\nany other key: Sell offer\n> ") == '1' else 'buyPrice'
     USE_KISMETS = True if input("Do you want to use kismets when possible\n1: Use kismets\nany other key: No kismets\n> ") == '1' else False
@@ -143,8 +144,8 @@ else:
     SELL_TYPE = 'buyPrice'
     USE_KISMETS = True
     BUY_TYPE = 'sellPrice'
-    target_players = 1000000
-    option = '1'
-    stop = 270
+    target_players = 100000
+    option = '4'
+    stop = 400
 
 main()

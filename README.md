@@ -6,14 +6,14 @@ maybe this is a waste of time
 Setting rng meter to handle from start, without kismets
 
 
-![option1](option1.png)
+![3.7m per run](resources/F7_profit/option1.png)
 
 
 VS:
 Setting rng meter to handle from start, with kismets
 
 
-![option1_nokismets](option1_nokismet.png)
+![2.7m per run](resources/F7_profit/option1_nokismet.png)
 
 So kismets is worth on f7 even after handle prices tanked
 
@@ -21,7 +21,7 @@ So kismets is worth on f7 even after handle prices tanked
 Only turning rng meter on when drop first handle without rng meter (with kismets)
 
 
-![option2](option2.png)
+![3.6m per run](resources/F7_profit/option2.png)
 
 
 Slightly worse than just setting rng on handle from start
@@ -29,13 +29,13 @@ Slightly worse than just setting rng on handle from start
 Setting rng meter on only when it is 80% filled
 
 
-![option4_730](option4_730.png)
+![3.6m per run](resources/F7_profit/option4_730.png)
 
 
 Setting rng meter on only when 100% filled
 
 
-![option4_914](option4_914.png)
+![3.6m per run](resources/F7_profit/option4_914.png)
 
 
 
@@ -44,13 +44,13 @@ Setting rng meter on only when 100% filled
 weird strat: setting rng meter on til 80% filled, then off til drop handle, then on for second handle 
 
 
-![option3_730](option3_730.png)
+![3.7m per run](resources/F7_profit/option3_730.png)
 
 
 Very close to just setting rng meter on from the start. But with kismets, by the time its 80% filled, we probably dropped the handle already, so ill try with switching it off after 270 runs
 
 
-![option3_250](option3_270.png)
+![4.8m per run](resources/F7_profit/option3_270.png)
 
 
 
