@@ -55,3 +55,4 @@ Very close to just setting rng meter on from the start. But with kismets, by the
 
 
 somehow its more money than just leaving it on handle from the start???? idk man u can try this strat but maybe my code is wrong somehow im gonna explode
+both has the same profit per run if use mean values tho, idk what that means
