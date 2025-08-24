@@ -25,3 +25,8 @@ Only turning rng meter on when drop first handle without rng meter (with kismets
 
 
 Slightly worse than just setting rng on handle from start
+
+Setting rng meter on only when it is 80% filled
+
+
+![option3_730](option3_730.png)
