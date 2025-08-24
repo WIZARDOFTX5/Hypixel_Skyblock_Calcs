@@ -47,4 +47,4 @@ weird strat: setting rng meter on til 80% filled, then off til drop handle, then
 ![option3_730](option3_730.png)
 
 
-with kismets, by the time its 80% filled, we probably dropped the handle already, so ill try with switching it off after 250 runs
+Very close to just setting rng meter on from the start. But with kismets, by the time its 80% filled, we probably dropped the handle already, so ill try with switching it off after 250 runs
