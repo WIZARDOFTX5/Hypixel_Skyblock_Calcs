@@ -39,7 +39,7 @@ Setting rng meter on only when 100% filled
 
 
 
-## In conclusion, all these goofy strats are goofy. just set rng meter on from the start, with kismets.
+> In conclusion, all these goofy strats are goofy. just set rng meter on from the start, with kismets.
 
 weird strat: setting rng meter on til 80% filled, then off til drop handle, then on for second handle 
 
