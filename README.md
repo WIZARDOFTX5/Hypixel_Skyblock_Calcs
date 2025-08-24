@@ -29,4 +29,20 @@ Slightly worse than just setting rng on handle from start
 Setting rng meter on only when it is 80% filled
 
 
+![option4_730](option4_730.png)
+
+
+Setting rng meter on only when 100% filled
+
+
+![option4_914](option4_914.png)
+
+
+
+weird strat: setting rng meter on til 80% filled, then off til drop handle, then on for second handle 
+
+
 ![option3_730](option3_730.png)
+
+
+with kismets, by the time its 80% filled, we probably dropped the handle already, so ill try with switching it off after 250 runs
