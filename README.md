@@ -32,14 +32,11 @@ Setting rng meter on only when it is 80% filled
 ![3.6m per run](resources/F7_profit/option4_730.png)
 
 
-Setting rng meter on only when 100% filled
+Setting rng meter on only after 400 runs
 
 
-![3.6m per run](resources/F7_profit/option4_914.png)
+![3.9m per run](resources/F7_profit/option4_400.png)
 
-
-
-> In conclusion, all these goofy strats are goofy. just set rng meter on from the start, with kismets.
 
 weird strat: setting rng meter on til 80% filled, then off til drop handle, then on for second handle 
 
