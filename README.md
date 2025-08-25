@@ -23,7 +23,7 @@ maybe this is a waste of time
 ![2.3m per run](resources/F7_profit/option2.png)
 
 
-**STRAT 3:** setting rng meter on until x runs without handle, then off til drop handle, then on for second handle (with kismets, x is 250 in this example)
+**STRAT 3:** setting rng meter on until x runs without handle, then off til drop handle, then on for second handle (with kismets, x is 270 in this example)
 
 
 ![2.4m per run](resources/F7_profit/option3_270.png)
