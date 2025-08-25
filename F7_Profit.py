@@ -55,12 +55,14 @@ def main(silent=False):
     if bz['success'] != True:
         return
     
-
+    CHEST_COSTS = {'scroll': 50000000,
+                   'handle': 100000000,
+                   'recomb': 6000000}
     SCROLL_PRICES = numpy.mean([bz['products']['IMPLOSION_SCROLL']['quick_status'][SELL_TYPE],
                                 bz['products']['SHADOW_WARP_SCROLL']['quick_status'][SELL_TYPE],
-                                bz['products']['IMPLOSION_SCROLL']['quick_status'][SELL_TYPE]])
-    HANDLE_PRICES = 550000000
-    RECOMB_PRICES = bz['products']['RECOMBOBULATOR_3000']['quick_status'][SELL_TYPE]
+                                bz['products']['IMPLOSION_SCROLL']['quick_status'][SELL_TYPE]]) - CHEST_COSTS['scroll']
+    HANDLE_PRICES = 550000000  - CHEST_COSTS['handle']
+    RECOMB_PRICES = bz['products']['RECOMBOBULATOR_3000']['quick_status'][SELL_TYPE] - CHEST_COSTS['recomb']
     KISMET_PRICES = bz['products']['KISMET_FEATHER']['quick_status'][BUY_TYPE]
 
     player = 0
@@ -110,9 +112,9 @@ def main(silent=False):
     median_profit = (HANDLE_PRICES*handles + SCROLL_PRICES*scroll + RECOMB_PRICES*recomb - KISMET_PRICES*kismets)/run
     mean_profit = (HANDLE_PRICES*mean_handles + SCROLL_PRICES*mean_scroll + RECOMB_PRICES*mean_recomb - KISMET_PRICES*mean_kismets)/mean_run
     if not silent:
-        print(f"Average handle price: {HANDLE_PRICES}")
-        print(f"Average scroll price: {SCROLL_PRICES}")
-        print(f"Average recomb price: {RECOMB_PRICES}")
+        print(f"Average handle profit: {HANDLE_PRICES}")
+        print(f"Average scroll profit: {SCROLL_PRICES}")
+        print(f"Average recomb profit: {RECOMB_PRICES}")
         print(f"Average kismet price: {KISMET_PRICES}")
         print(f'Sample size of {target_players} players')
         print(f"Mean handles per player: {mean_handles}")
@@ -129,7 +131,7 @@ def main(silent=False):
         print(f"profit per run (Mean): {mean_profit}")
     return (median_profit,median_profit)
 
-menu = False
+menu = True
 if menu:
     SELL_TYPE = 'sellPrice' if input("Enter sell method for items\n1: Sell instantly\nany other key: Sell offer\n> ") == '1' else 'buyPrice'
     USE_KISMETS = True if input("Do you want to use kismets when possible\n1: Use kismets\nany other key: No kismets\n> ") == '1' else False
@@ -144,8 +146,8 @@ else:
     SELL_TYPE = 'buyPrice'
     USE_KISMETS = True
     BUY_TYPE = 'sellPrice'
-    target_players = 100000
-    option = '4'
-    stop = 400
+    target_players = 1000000
+    option = '3'
+    stop = 270
 
 main()
