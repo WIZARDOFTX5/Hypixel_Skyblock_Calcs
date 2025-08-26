@@ -1,3 +1,22 @@
+menu = True
+if menu:
+    SELL_TYPE = 'sellPrice' if input("Enter sell method for items\n1: Sell instantly\nany other key: Sell offer\n> ") == '1' else 'buyPrice'
+    USE_KISMETS = True if input("Do you want to use kismets when possible\n1: Use kismets\nany other key: No kismets\n> ") == '1' else False
+    if USE_KISMETS:
+        BUY_TYPE = 'buyPrice' if input("Enter buy method for kismets\n1: Buy instantly\nany other key: Buy offer\n> ") == '1' else 'sellPrice'
+    target_players = int(input('Enter number of players to simulate (min 1) \n> '))
+    print("Enter RNG meter strat\n1: RNG meter from start\n2: No rng meter from start, then RNG meter for second handle")
+    option = input('3: rng meter til certain run, then disable til handle(if havent dropped), then rng for handle again\nany other key: no rng til certain run, then rng til handle\n> ')
+    if option != '1' or option != '2':
+        stop = int(input('Enter the run to switch rng meter\n> '))
+else:
+    SELL_TYPE = 'buyPrice'
+    USE_KISMETS = True
+    BUY_TYPE = 'sellPrice'
+    target_players = 1000000
+    option = '3'
+    stop = 270
+
 def main(silent=False):
     from random import random
     import numpy
@@ -130,24 +149,5 @@ def main(silent=False):
         print(f"profit per run (Median): {median_profit}")
         print(f"profit per run (Mean): {mean_profit}")
     return (median_profit,median_profit)
-
-menu = True
-if menu:
-    SELL_TYPE = 'sellPrice' if input("Enter sell method for items\n1: Sell instantly\nany other key: Sell offer\n> ") == '1' else 'buyPrice'
-    USE_KISMETS = True if input("Do you want to use kismets when possible\n1: Use kismets\nany other key: No kismets\n> ") == '1' else False
-    if USE_KISMETS:
-        BUY_TYPE = 'buyPrice' if input("Enter buy method for kismets\n1: Buy instantly\nany other key: Buy offer\n> ") == '1' else 'sellPrice'
-    target_players = int(input('Enter number of players to simulate (min 1) \n> '))
-    print("Enter RNG meter strat\n1: RNG meter from start\n2: No rng meter from start, then RNG meter for second handle")
-    option = input('3: rng meter til certain run, then disable til handle(if havent dropped), then rng for handle again\nany other key: no rng til certain run, then rng til handle\n> ')
-    if option != '1' or option != '2':
-        stop = int(input('Enter the run to switch rng meter\n> '))
-else:
-    SELL_TYPE = 'buyPrice'
-    USE_KISMETS = True
-    BUY_TYPE = 'sellPrice'
-    target_players = 1000000
-    option = '3'
-    stop = 270
 
 main()
