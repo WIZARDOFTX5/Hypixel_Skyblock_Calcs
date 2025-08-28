@@ -34,10 +34,22 @@ class Sheep():
         self.__HourlyCost = {} # items consumed per hour (eg, using tasty cheese would have a hourly cost of 1 tasty cheese)
         self.__HourlyBonus = {} # extra items produced per hour (eg, berberis would produce 12 lush berberis per hour)
         self.__MinimumPriority = 0
+        self.__Upgrades = 0
+        self.__Fuel = 0
     def __repr__(self):
         return f"Tier {self.__tier} sheep minion, with a {self.__BaseSpeed*100/self.__BonusSpeed}s action speed"
     # Follow the priority of the functions in ascending order. Eg must add diamond spreading(2) before sc3k(3)
-    def PriorityCheck(self,priority):
+    def __UpgradesCheck__(self):
+        if self.__Upgrades == 2:
+            raise ValueError("Max upgrades reached")
+        else:
+            self.__Upgrades += 1
+    def __FuelCheck__(self):
+        if self.__Fuel == 1:
+            raise ValueError("Fuel already added")
+        else:
+            self.__Fuel += 1
+    def __PriorityCheck__(self,priority):
         if self.__MinimumPriority > priority:
             raise ValueError(f"Cannot perform method of priority {priority} when minimum priority is {self.__MinimumPriority}")
         else:
@@ -45,46 +57,51 @@ class Sheep():
     def Add_Infusion(self):
         "Priority: 1"
         Priority = 1
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
         self.__BonusSpeed += 10
     def Add_Beacon(self,tier,minions):
         "Priority: 1 (specify number of minions to split power crystal cost)"
         Priority = 1
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
         self.__BonusSpeed += int(tier)*2
         self.__HourlyCost['POWER_CRYSTAL'] = 1/(48*int(minions))
     def Add_Postcard(self):
         "Priority: 1"
         Priority = 1
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
         self.__BonusSpeed += 5
     def Add_Lava_Bucket(self,tier):
         "Priority:1 (t1 is ench lava, t2 is magma, t3 is plasma)"
         Priority = 1
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
+        self.__FuelCheck__()
         self.__BonusSpeed += 20 + int(tier)*5
     def Add_Berberis_Injector(self):
         "Priority: 1"
         Priority = 1
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
+        self.__UpgradesCheck__()
         self.__BonusSpeed += 15
         self.__HourlyBonus['LUSH_BERBERIS'] = 12  # 1 berberis every 5 minutes
     def Add_Corrupted_Soil(self):
         "Priority: 1"
         Priority = 1
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
+        self.__UpgradesCheck__()
         self.__Products['CORRUPTED_FRAGMENT'] = 1
         self.__Products['SULPHUR_ORE'] = 1  # for some reason SULPHUR is gunpowder according to bz api?!
     def Add_Dia_Spreading(self): 
         "Priority: 2"
         Priority = 2
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
+        self.__UpgradesCheck__()
         self.__Products['DIAMOND'] = 0.1*sum(self.__Products.values())
         self.__HourlyBonus['DIAMOND'] = 0.1*sum(self.__HourlyBonus.values())
     def Add_Cheese(self):
         "Priority: 3"
         Priority = 3
-        self.PriorityCheck(Priority)
+        self.__PriorityCheck__(Priority)
+        self.__FuelCheck__()
         self.__HourlyCost['CHEESE_FUEL'] = 1
         for item in self.__Products:
             self.__Products[item] *= 2
@@ -93,7 +110,8 @@ class Sheep():
     def Add_SC3K(self):    
         "Priority: 3" 
         Priority = 3
-        self.PriorityCheck(Priority)     
+        self.__PriorityCheck__(Priority)  
+        self.__UpgradesCheck__()   
         for product in self.__Products.copy():
             amount = self.__Products.pop(product)
             if product == 'CORRUPTED_FRAGMENT':
