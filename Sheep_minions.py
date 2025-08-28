@@ -94,16 +94,15 @@ class Sheep():
         "Priority: 3" 
         Priority = 3
         self.PriorityCheck(Priority)     
-        for product,amount in self.__Products.items():
+        for product in self.__Products.copy():
+            amount = self.__Products.pop(product)
             if product == 'CORRUPTED_FRAGMENT':
                 continue
             else:
                 if product == 'SULPHUR_ORE':
                     self.__Products['ENCHANTED_SULPHUR'] = amount/160
-                    self.__Products[product] = 0
                 else:
                     self.__Products['ENCHANTED_'+product] = amount/160
-                    self.__Products[product] = 0
     def Products(self,hours):
         actionSpeed = self.__BaseSpeed*100/self.__BonusSpeed
         Hourlyactions = 1800/actionSpeed
