@@ -1,6 +1,3 @@
-# Hypixel_Skyblock_Calcs
-maybe this is a waste of time
-
 # F7 Profit calculator
 
 **STRAT 1:** Setting rng meter to handle from start, without kismets
