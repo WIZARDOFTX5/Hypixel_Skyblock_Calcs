@@ -24,7 +24,7 @@ BOSS_LUCK_BONUS = 10  # 10 for Boss Luck 4, 5 for level 3, 3 for level 2, 1 for 
 
 SELL_TYPE = 'buyPrice' if sell_offer else 'sellPrice'
 
-SCORE_BONUS = 1.05
+SCORE_BONUS = 1.05  # quality bonus from S+ runs
 
 # AH PRICES (idk how use ah api) last updated on 13/9/2025
 AH_PRICE = {'NECRON_HANDLE': 560000000,
@@ -52,6 +52,7 @@ if bz['success'] != True:
 
 
 # LOOT TABLE, all loot tables should be sorted in descending quality
+# Also i didnt implement music disc replacing essence drops
 
 class Loot():
     TOTAL_WEIGHT = 13706   # base total weight of f7 bedrock chest. Note that items not from bedrock cannot have rng meter on it
@@ -214,27 +215,29 @@ def profit(loot:Loot):
     return loot.profit
 
 class Chest():
+    meter_target = 'placeholder'
+    runs = 0
     def __init__(self,loot_table:list[Loot],base_quality:int,base_wither_essence:int,base_undead_essence:int):
         self.__quality = round(round(round(base_quality*1.05)*TREASURE_BONUS+BOSS_LUCK_BONUS)*TREASURE_BONUS+BOSS_LUCK_BONUS)
         self.__loot_table = loot_table
         self.__base_wither_essence = base_wither_essence
         self.__base_undead_essence = base_undead_essence
-    def roll(self,meter_target,runs:int):
+    def roll(self):
         quality = self.__quality
         possible_drops = self.__loot_table.copy()
         drops = [Loot('ESSENCE_WITHER',0,1,10) for i in range(self.__base_wither_essence)] + [Loot('ESSENCE_UNDEAD',0,0,1) for i in range(self.__base_undead_essence)]
 
         for item in possible_drops:
-            if item.id == meter_target:
-                meter_target = item
+            if item.id == self.meter_target:
+                target = item
                 break
         else:
-            meter_target = Loot('placeholder',0,0,0)
+            target = Loot('placeholder',0,0,0)
         
-        if meter_target.apply_meter(runs):
-            quality -= meter_target.quality
-            drops.append(meter_target)
-            possible_drops.remove(meter_target)
+        if target.apply_meter(self.runs):
+            quality -= target.quality
+            drops.append(target)
+            possible_drops.remove(target)
 
         while quality > 0:
             while possible_drops[0].quality > quality: 
@@ -249,7 +252,7 @@ class Chest():
             if 'ESSENCE_' not in drop.id:
                 possible_drops.remove(drop)
 
-        meter_target.reset_weight()
+        target.reset_weight()
 
         return drops
 
@@ -261,8 +264,8 @@ diamond_chest = Chest(DIAMOND_LOOT,220,21,30)  # 250k base cost
 gold_chest = Chest(GOLD_LOOT,180,18,20)  # 100K base cost
 wood_chest = Chest(WOOD_LOOT,125,15,10)  # no base cost
 
-while False:
-    loot = bedrock_chest.roll('NECRON_HANDLE',913)
+while True:
+    loot = bedrock_chest.roll()
     print([item for item in loot if 'ESSENCE_' not in item.id])
     print(sum(map(profit,loot))/1000000-0.250)
     input()
