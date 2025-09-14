@@ -54,7 +54,7 @@ if bz['success'] != True:
 # LOOT TABLE, all loot tables should be sorted in descending quality
 
 class Loot():
-    TOTAL_WEIGHT = 13706   # base total weight of bedrock chest. Note that items not from bedrock cannot have rng meter on it
+    TOTAL_WEIGHT = 13706   # base total weight of f7 bedrock chest. Note that items not from bedrock cannot have rng meter on it
     def __init__(self,id,cost,weight,quality):
         self.id = id
         self.__cost = cost
@@ -72,7 +72,7 @@ class Loot():
         self.weight = self.__base_weight*(1+min(runs*self.__base_weight*2/self.TOTAL_WEIGHT,2))
         if runs*self.__base_weight > self.TOTAL_WEIGHT:
             return True
-    def apply_paul(self):  # does not take into account the 2mil base cost. remember to account for that in later calculations
+    def apply_paul(self):  # does not take into account the base cost. remember to account for that in later calculations
         self.profit = self.__value - self.__cost*0.8
     def __repr__(self):
         return self.id
@@ -110,6 +110,99 @@ BEDROCK_LOOT = [Loot('NECRON_HANDLE',98000000,15,360),
                 Loot('GOLDOR_THE_FISH',0,10,61),
                 Loot('ESSENCE_WITHER',0,1,10),
                 Loot('ESSENCE_UNDEAD',0,0,1)]
+
+
+OBSIDIAN_LOOT = [Loot('WITHER_CHESTPLATE',9000000,1,310),
+                Loot('ENCHANTMENT_ULTIMATE_ONE_FOR_ALL_1',1000000,1,290),
+                Loot('RECOMBOBULATOR_3000',5000000,2,250),
+                Loot('WITHER_LEGGINGS',5000000,4,250),
+                Loot('WITHER_CLOAK',3500000,6,230),
+                Loot('WITHER_HELMET',3000000,6,210),
+                Loot('WITHER_BLOOD',1500000,6,210),
+                Loot('ENCHANTMENT_ULTIMATE_SOUL_EATER_1',0,14,180),
+                Loot('FUMING_POTATO_BOOK',0,14,175),
+                Loot('WITHER_BOOTS',1500000,14,170),
+                Loot('WITHER_CATALYST',0,14,160),
+                Loot('HOT_POTATO_BOOK',0,10,160),
+                Loot('PRECURSOR_GEAR',0,16,140),
+                Loot('ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_1',0,10,120),
+                Loot('ENCHANTMENT_ULTIMATE_COMBO_1',0,32,120),
+                Loot('ENCHANTMENT_ULTIMATE_BANK_2',0,15,100),
+                Loot('ENCHANTMENT_REJUVENATE_2',0,50,100),
+                Loot('ENCHANTMENT_ULTIMATE_WISDOM_1',0,15,100),
+                Loot('ENCHANTMENT_ULTIMATE_LAST_STAND_1',0,30,100),
+                Loot('ENCHANTMENT_ULTIMATE_WISE_1',0,40,100),
+                Loot('ENCHANTMENT_ULTIMATE_JERRY_2',0,8,100),
+                Loot('ESSENCE_WITHER',0,1,10),
+                Loot('ESSENCE_UNDEAD',0,0,1)]
+
+
+EMERALD_LOOT =  [Loot('WITHER_LEGGINGS',5500000,1,250),
+                Loot('WITHER_CLOAK',4000000,1,230),
+                Loot('WITHER_HELMET',3500000,2,210),
+                Loot('WITHER_BLOOD',2000000,2,210),
+                Loot('ENCHANTMENT_ULTIMATE_SOUL_EATER_1',500000,6,180),
+                Loot('WITHER_BOOTS',2000000,4,170),
+                Loot('ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_1',0,5,160),
+                Loot('WITHER_CATALYST',500000,5,160),
+                Loot('HOT_POTATO_BOOK',0,5,160),
+                Loot('PRECURSOR_GEAR',0,7,140),
+                Loot('ENCHANTMENT_INFINITE_QUIVER_6',0,16,120),
+                Loot('ENCHANTMENT_ULTIMATE_COMBO_1',0,16,120),
+                Loot('ENCHANTMENT_ULTIMATE_BANK_1',0,10,100),
+                Loot('ENCHANTMENT_ULTIMATE_WISDOM_1',0,10,100),
+                Loot('ENCHANTMENT_ULTIMATE_LAST_STAND_1',0,10,100),
+                Loot('ENCHANTMENT_ULTIMATE_WISE_1',0,20,100),
+                Loot('ENCHANTMENT_FEATHER_FALLING_6',0,20,80),
+                Loot('ENCHANTMENT_REJUVENATE_2',0,25,80),
+                Loot('ENCHANTMENT_ULTIMATE_JERRY_2',0,10,80),
+                Loot('ESSENCE_WITHER',0,1,10),
+                Loot('ESSENCE_UNDEAD',0,0,1)]
+
+
+DIAMOND_LOOT =  [Loot('WITHER_HELMET',3750000,1,210),
+                Loot('ENCHANTMENT_ULTIMATE_SOUL_EATER_1',750000,2,180),
+                Loot('WITHER_BOOTS',2250000,2,170),
+                Loot('WITHER_CATALYST',750000,5,160),
+                Loot('HOT_POTATO_BOOK',0,5,160),
+                Loot('PRECURSOR_GEAR',250000,8,140),
+                Loot('ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_1',0,16,120),
+                Loot('ENCHANTMENT_ULTIMATE_COMBO_1',0,16,120),
+                Loot('ENCHANTMENT_ULTIMATE_BANK_1',0,15,100),
+                Loot('ENCHANTMENT_ULTIMATE_WISDOM_1',0,15,100),
+                Loot('ENCHANTMENT_ULTIMATE_WISE_1',0,20,100),
+                Loot('ENCHANTMENT_ULTIMATE_JERRY_2',0,1,100),
+                Loot('ENCHANTMENT_INFINITE_QUIVER_6',0,20,80),
+                Loot('ENCHANTMENT_FEATHER_FALLING_6',0,25,80),
+                Loot('ENCHANTMENT_REJUVENATE_1',0,40,80),
+                Loot('ESSENCE_WITHER',0,1,10),
+                Loot('ESSENCE_UNDEAD',0,1,1)]
+
+
+GOLD_LOOT = [Loot('WITHER_BOOTS',2400000,2,170),
+            Loot('WITHER_CATALYST',900000,5,160),
+            Loot('HOT_POTATO_BOOK',0,5,160),
+            Loot('PRECURSOR_GEAR',400000,7,140),
+            Loot('ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_1',0,16,120),
+            Loot('ENCHANTMENT_ULTIMATE_COMBO_1',0,16,120),
+            Loot('ENCHANTMENT_ULTIMATE_BANK_1',0,15,100),
+            Loot('ENCHANTMENT_ULTIMATE_WISDOM_1',0,15,100),
+            Loot('ENCHANTMENT_ULTIMATE_WISE_1',0,20,100),
+            Loot('ENCHANTMENT_ULTIMATE_JERRY_1',0,1,100),
+            Loot('ENCHANTMENT_INFINITE_QUIVER_6',0,20,80),
+            Loot('ENCHANTMENT_FEATHER_FALLING_6',0,25,80),
+            Loot('ENCHANTMENT_REJUVENATE_1',0,40,80),
+            Loot('ESSENCE_WITHER',0,1,10),
+            Loot('ESSENCE_UNDEAD',0,1,1)]
+
+
+WOOD_LOOT = [Loot('ENCHANTMENT_ULTIMATE_BANK_1',0,20,100),
+            Loot('ENCHANTMENT_ULTIMATE_JERRY_1',0,1,100),
+            Loot('ENCHANTMENT_INFINITE_QUIVER_6',0,30,80),
+            Loot('ENCHANTMENT_FEATHER_FALLING_6',0,35,80),
+            Loot('ENCHANTMENT_REJUVENATE_1',0,30,80),
+            Loot('ESSENCE_WITHER',0,1,10),
+            Loot('ESSENCE_UNDEAD',0,1,1)]
 
 
 # chest functions
@@ -153,14 +246,23 @@ class Chest():
             drop = choices(possible_drops,weights=list(map(weight,possible_drops)))[0]
             quality -= drop.quality
             drops.append(drop)
-            possible_drops.remove(drop)
+            if 'ESSENCE_' not in drop.id:
+                possible_drops.remove(drop)
 
         meter_target.reset_weight()
 
         return drops
 
 
-bedrock_chest = Chest(BEDROCK_LOOT,370,50,70)
-loot = bedrock_chest.roll('NECRON_HANDLE',914)
-print([item for item in loot if 'ESSENCE_' not in item.id])
-print(sum(map(profit,loot))/1000000-2)
+bedrock_chest = Chest(BEDROCK_LOOT,370,50,70)  # 2m base cost
+obsidian_chest = Chest(OBSIDIAN_LOOT,330,35,55)  # 1m base cost
+emerald_chest = Chest(EMERALD_LOOT,260,28,40)  # 500k base cost
+diamond_chest = Chest(DIAMOND_LOOT,220,21,30)  # 250k base cost
+gold_chest = Chest(GOLD_LOOT,180,18,20)  # 100K base cost
+wood_chest = Chest(WOOD_LOOT,125,15,10)  # no base cost
+
+while False:
+    loot = bedrock_chest.roll('NECRON_HANDLE',913)
+    print([item for item in loot if 'ESSENCE_' not in item.id])
+    print(sum(map(profit,loot))/1000000-0.250)
+    input()
