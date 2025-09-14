@@ -68,7 +68,10 @@ class Loot():
     def reset_weight(self):
         self.weight = self.__base_weight
     def apply_meter(self,runs):
+        "returns True if item is guaranteed due to rng meter"
         self.weight = self.__base_weight*(1+min(runs*self.__base_weight*2/self.TOTAL_WEIGHT,2))
+        if runs*self.__base_weight > self.TOTAL_WEIGHT:
+            return True
     def apply_paul(self):  # does not take into account the 2mil base cost. remember to account for that in later calculations
         self.profit = self.__value - self.__cost*0.8
     def __repr__(self):
@@ -116,40 +119,48 @@ def weight(loot:Loot):
 
 def profit(loot:Loot):
     return loot.profit
-    
-def bedrock_chest(meter_target,runs:int):
-    quality = round(round(int(370*1.05)*TREASURE_BONUS+BOSS_LUCK_BONUS)*TREASURE_BONUS+BOSS_LUCK_BONUS)
-    possible_drops = BEDROCK_LOOT.copy()
-    drops = [Loot('ESSENCE_WITHER',0,1,10) for i in range(50)] + [Loot('ESSENCE_UNDEAD',0,0,1) for i in range(70)]
 
-    for item in possible_drops:
-        if item.id == meter_target:
-            meter_target = item
-            break
-    else:
-        meter_target = Loot('placeholder',0,0,0)
-    
-    meter_target.apply_meter(runs)
+class Chest():
+    def __init__(self,loot_table:list[Loot],base_quality:int,base_wither_essence:int,base_undead_essence:int):
+        self.__quality = round(round(round(base_quality*1.05)*TREASURE_BONUS+BOSS_LUCK_BONUS)*TREASURE_BONUS+BOSS_LUCK_BONUS)
+        self.__loot_table = loot_table
+        self.__base_wither_essence = base_wither_essence
+        self.__base_undead_essence = base_undead_essence
+    def roll(self,meter_target,runs:int):
+        quality = self.__quality
+        possible_drops = self.__loot_table.copy()
+        drops = [Loot('ESSENCE_WITHER',0,1,10) for i in range(self.__base_wither_essence)] + [Loot('ESSENCE_UNDEAD',0,0,1) for i in range(self.__base_undead_essence)]
 
-    while quality > 0:
-        while possible_drops[0].quality > quality: 
-            possible_drops.pop(0)
-        if len(possible_drops) == 1:  # seperate check for wither essence (weight of 0 breaks random.choices)
-            drops.append(possible_drops[0])
-            quality -= possible_drops[0].quality 
-            continue
-        drop = choices(possible_drops,weights=list(map(weight,possible_drops)))[0]
-        quality -= drop.quality
-        drops.append(drop)
-        possible_drops.remove(drop)
+        for item in possible_drops:
+            if item.id == meter_target:
+                meter_target = item
+                break
+        else:
+            meter_target = Loot('placeholder',0,0,0)
+        
+        if meter_target.apply_meter(runs):
+            quality -= meter_target.quality
+            drops.append(meter_target)
+            possible_drops.remove(meter_target)
 
-    meter_target.reset_weight()
+        while quality > 0:
+            while possible_drops[0].quality > quality: 
+                possible_drops.pop(0)
+            if len(possible_drops) == 1:  # seperate check for undead essence (weight of 0 breaks random.choices)
+                drops.append(possible_drops[0])
+                quality -= possible_drops[0].quality 
+                continue
+            drop = choices(possible_drops,weights=list(map(weight,possible_drops)))[0]
+            quality -= drop.quality
+            drops.append(drop)
+            possible_drops.remove(drop)
 
-    return drops
+        meter_target.reset_weight()
+
+        return drops
 
 
-print(len(BEDROCK_LOOT),sum(map(weight,BEDROCK_LOOT)))
-
-loot = bedrock_chest('123',0)
+bedrock_chest = Chest(BEDROCK_LOOT,370,50,70)
+loot = bedrock_chest.roll('NECRON_HANDLE',914)
 print([item for item in loot if 'ESSENCE_' not in item.id])
 print(sum(map(profit,loot))/1000000-2)
